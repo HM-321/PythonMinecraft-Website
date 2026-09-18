@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>PythonMinecraft かんたん版</title>
+    <link href="kids.css" rel="stylesheet" />
+    <script defer="" src="kids.js"></script>
+    <link href="media.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <a class="brand" href="kids.html">PythonMinecraft かんたん版</a>
+        <a class="adult-link" href="index.html">くわしい技術版を見る</a>
+    </header>
+    <main>
+        <section class="slide active">
+            <div class="page-number">01 / どんなゲーム？</div>
+            <h1>ブロックを置いたり壊したりして遊ぶゲーム</h1>
+            <p class="lead">PythonMinecraftは、ブロックを置いたり、壊したりして、同じ世界をみんなで作れるゲームです。</p>
+            <div class="two-column">
+                <div>
+                    <p>地面や木は、ワールドを作ったときに自動で生まれます。友だちと同じサーバーに入ると、だれかが置いたブロックがほかの画面にもすぐ表示されます。</p>
+                    <dl class="simple-list">
+                        <div>
+                            <dt>世界の広さ</dt>
+                            <dd>100 × 100 ブロック</dd>
+                        </div>
+                        <div>
+                            <dt>いっしょに遊べる人数</dt>
+                            <dd>最大8人</dd>
+                        </div>
+                        <div>
+                            <dt>作ったもの</dt>
+                            <dd>自動で保存</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <figure class="media"><button aria-label="草原と木があるゲーム画面を拡大" class="media-button" data-zoom="assets/hero.png"
+                    type="button"><img alt="草原と木があるゲーム画面" src="assets/hero.png" /></button></figure>
+        </section>
+
+        <section class="slide">
+            <div class="page-number">02 / ブロックを見つけるしくみ</div>
+            <h1>線が通った正方形のマスだけを調べる</h1>
+            <p class="lead">画面の中央から見ている方向へ線をのばし、線が通過したマスを順番に確認します。</p>
+            <p>最初にブロックが見つかったマスを、置く・壊す操作の対象にします。この方法をDDAと呼びます。世界中のブロックを全部調べず、必要なマスだけを調べられます。</p>
+            <figure class="media"><button aria-label="DDAレイキャストの図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/dda.svg" type="button"><img alt="DDAレイキャストの図"
+                        src="assets/diagrams/dda.svg" /></button>
+                <figcaption>通過した正方形セルだけを順番に検索します。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+        </section>
+        <section class="slide">
+            <div class="page-number">03 / 当たり判定</div>
+            <h1>プレイヤーの箱と正方形のブロックをくらべる</h1>
+            <p class="lead">プレイヤーの体を見えない箱として扱い、移動先でブロックと重なるかを調べます。</p>
+            <p>まずX方向、次にY方向、最後にZ方向を別々に判定します。壁にぶつかった方向だけを止めるため、壁に沿う方向の移動は続けられます。</p>
+            <figure class="media"><button aria-label="当たり判定の図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/collision.svg" type="button"><img alt="当たり判定の図"
+                        src="assets/diagrams/collision.svg" /></button>
+                <figcaption>壁へ向かう移動だけを止めます。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+        </section>
+        <section class="slide">
+            <div class="page-number">04 / 軽くするしくみ</div>
+            <h1>正方形のブロックをまとめて描く</h1>
+            <p class="lead">最初は、ブロックを一つずつ別の3Dオブジェクトとして表示していました。</p>
+            <p>現在は10 × 10ブロックを一つのチャンクとしてまとめます。外から見えない面を取り除き、残った面だけを一つのメッシュとして描きます。</p>
+
+            <figure class="media"><button aria-label="チャンクメッシュ化の図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/chunk-mesh.svg" type="button"><img alt="チャンクメッシュ化の図"
+                        src="assets/diagrams/chunk-mesh.svg" /></button>
+                <figcaption>個別ブロックを一つの描画単位へまとめます。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+            <p class="performance-note">同じ条件で14 FPSから110 FPSまで改善しました。</p>
+        </section>
+        <section class="slide">
+            <div class="page-number">05 / 地形生成</div>
+            <h1>数字から同じ草原を作り直す</h1>
+            <p class="lead">ワールドには「シード」という大きな数字があります。</p>
+            <p>シードと場所の座標から地面の高さを計算し、上に草、その下に土と石を置きます。木の場所や高さも同じ数字から決めます。</p>
+            <figure class="media"><button aria-label="地形生成の図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/terrain.svg" type="button"><img alt="地形生成の図"
+                        src="assets/diagrams/terrain.svg" /></button>
+                <figcaption>同じシードから同じ地形を作ります。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+        </section>
+        <section class="slide">
+            <div class="page-number">06 / セーブ</div>
+            <h1>世界全部ではなく、変えた場所だけを保存する</h1>
+            <p class="lead">基本の地形はシードから作り直せるため、変更した部分だけを記録します。</p>
+            <p>読みこむときは、基本の地形を作り直し、壊した場所を消してから、置いたブロックを追加します。</p>
+            <figure class="media"><button aria-label="差分保存の図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/diff-save.svg" type="button"><img alt="差分保存の図"
+                        src="assets/diagrams/diff-save.svg" /></button>
+                <figcaption>基本地形と変更差分からワールドを復元します。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+        </section>
+        <section class="slide">
+            <div class="page-number">07 / マルチプレイ</div>
+            <h1>サーバーが正しい世界を一つだけ持つ</h1>
+            <p class="lead">置く・壊すという操作をサーバーへ送り、サーバーが全員へ同じ結果を知らせます。</p>
+            <p>それぞれのパソコンが勝手に世界を変えないため、全員の画面を同じ状態に保てます。砂が落ちる場所もサーバーが決めます。</p>
+
+            <figure class="media"><button aria-label="マルチプレイ通信の図を拡大" class="media-button"
+                    data-zoom="assets/diagrams/network.svg" type="button"><img alt="マルチプレイ通信の図"
+                        src="assets/diagrams/network.svg" /></button>
+                <figcaption>サーバーが検証し、全員へ同じ結果を送ります。タップまたはクリックで拡大できます。</figcaption>
+            </figure>
+            <figure class="media"><button aria-label="マルチプレイ画面を拡大" class="media-button"
+                    data-zoom="assets/multiplayer.png" type="button"><img alt="マルチプレイ画面"
+                        src="assets/multiplayer.png" /></button></figure>
+        </section>
+    </main>
+    <footer><button id="prev">前へ</button><span id="counter">1 / 7</span><button id="next">次へ</button></footer>
+    <script src="media-viewer.js"></script>
+</body>
+
+</html>
